@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Search Results</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google-like Search Bar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> <!-- Include FontAwesome library -->
+  <style>
+    #search-container {
+      display: flex;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+
+    #search-input {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 20px; /* Capsule shape */
+    }
+
+    #search-container button {
+      padding: 8px 15px;
+      background-color: #4285F4; /* Google blue color */
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: -5px; /* Adjust for the overlap with the semi-circle */
+    }
+
+    #search-container button:hover {
+      background-color: #357AE8; /* Darker blue on hover */
+    }
+
+    #search-results {
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <?php
-        // Sample data
-        $data = [
-            "Result 1",
-            "Result 2",
-            "Result 3",
-            // Add more data as needed
-        ];
 
-        // Get search term from the form
-        $searchTerm = isset($_GET['searchInput']) ? strtolower($_GET['searchInput']) : '';
+<div id="search-container">
+  <div style="border-radius: 20px 0 0 20px; overflow: hidden;">
+    <input type="text" id="search-input" placeholder="Google Search">
+  </div>
+  <button onclick="search()"><i class="fas fa-search"></i></button> <!-- Magnifying glass icon -->
+</div>
 
-        // Filter data based on search term
-        $searchResults = array_filter($data, function ($result) use ($searchTerm) {
-            return stripos($result, $searchTerm) !== false;
-        });
+<div id="search-results">
+  <!-- Search results will be inserted here -->
+</div>
 
-        // Generate a new HTML page for results
-        $resultPage = "<div class='container'>";
-        foreach ($searchResults as $result) {
-            $resultPage .= "<div class='resultItem'>$result</div>";
-        }
-        $resultPage .= "</div>";
-
-        // Save the generated content to a new file (you may need to adjust file permissions)
-        file_put_contents('search_results_page.html', $resultPage);
-
-        // Provide a link to the generated results page
-        echo "<p>Search results have been saved. <a href='search_results_page.html'>View Results</a></p>";
-        ?>
-    </div>
+<script src="script.js"></script>
 </body>
 </html>
